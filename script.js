@@ -279,3 +279,34 @@ function initTypingEffect() {
 
 // Initialize typing effect after a short delay
 setTimeout(initTypingEffect, 1000);
+function createParticles(container, count=50) {
+  const width = container.offsetWidth;
+  const height = container.offsetHeight;
+
+  for(let i=0;i<count;i++){
+    const p = document.createElement('div');
+    p.classList.add('particle');
+
+    // Random starting position full container me
+    p.style.left = `${Math.random() * width}px`;
+    p.style.top = `${Math.random() * height}px`;
+
+    // Random drift
+    p.style.setProperty('--drift-x', `${Math.random()*200-100}px`);
+    p.style.setProperty('--drift-y', `${Math.random()*200-100}px`);
+
+    container.appendChild(p);
+  }
+}
+
+window.addEventListener('load', () => {
+  const preloader = document.getElementById('preloader');
+  const particleContainer = document.getElementById('preloaderParticles');
+  createParticles(particleContainer, 50);
+
+  setTimeout(() => {
+    preloader.style.opacity = '0';
+    preloader.style.transition = 'opacity 0.5s ease';
+    setTimeout(() => preloader.remove(), 500);
+  }, 3500);
+});
